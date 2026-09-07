@@ -1,1 +1,188 @@
-bobr gryže kurva!!!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dam Good Camp — a chaotic beaver couch co-op</title>
+<meta name="description" content="A chaotic 2.5D couch co-op where two beavers run (mostly ruin) a summer campsite. Gather by day, keep the guests happy by night. Free on itch.io." />
+
+<meta property="og:title" content="Dam Good Camp" />
+<meta property="og:description" content="A chaotic couch co-op where beavers run a summer campsite." />
+<meta property="og:image" content="https://img.itch.zone/aW1nLzI3MjIyNDA2LnBuZw==/original/MqGiR8.png" />
+<meta property="og:type" content="website" />
+
+<link rel="icon" href="https://img.itch.zone/aW1nLzI3MjIyNDA2LnBuZw==/32x32%23/yuULEC.png" type="image/png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <a href="#top" class="brand">
+    <span class="brand-mark" aria-hidden="true">🦫</span>
+    Dam Good Camp
+  </a>
+  <nav class="topnav" aria-label="Page sections">
+    <a href="#phases">Phases</a>
+    <a href="#screens">Screens</a>
+    <a href="#trailer">Trailer</a>
+    <a href="#crew">Crew</a>
+  </nav>
+  <a class="btn btn-small" href="https://bethkux.itch.io/dam-good-camp" target="_blank" rel="noopener">Get the game</a>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-sky" aria-hidden="true">
+      <div class="stars" id="stars"></div>
+      <div class="dn-mount">
+        <button class="dn-indicator" id="dnIndicator" type="button" aria-pressed="false" aria-label="Toggle day and night">
+          <span class="dn-ring"></span>
+          <img class="dn-circle" id="dnCircle"
+               src="images/day-night-circle.png"
+               onerror="this.onerror=null;this.src=window.DN_FALLBACK_IMG;"
+               alt="" />
+          <span class="dn-arrow" id="dnArrow"></span>
+        </button>
+      </div>
+      <div class="hills hills-back"></div>
+      <div class="hills hills-front"></div>
+      <div class="water"></div>
+      <div class="scene-props">
+        <div class="tent" title="the tent"></div>
+        <div class="campfire" title="the campfire">
+          <span class="flame f1"></span><span class="flame f2"></span><span class="flame f3"></span>
+        </div>
+        <div class="pine p1"></div>
+        <div class="pine p2"></div>
+        <div class="pine p3"></div>
+      </div>
+    </div>
+
+    <div class="hero-copy">
+      <h1 class="hero-title">Dam&nbsp;Good&nbsp;Camp</h1>
+      <p class="hero-tag">
+        A chaotic 2.5D couch co-op where two beavers run &mdash; er, mostly ruin &mdash;
+        a summer campsite. Gather materials, patch up the place, and keep every guest smiling
+        before the sun goes down.
+      </p>
+      <p class="hero-phase" id="phaseLine" aria-live="polite">☀️ It's daytime at camp &mdash; time to build.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://bethkux.itch.io/dam-good-camp" target="_blank" rel="noopener">Get it on itch.io</a>
+        <a class="btn btn-ghost" href="#trailer">Watch the trailer</a>
+      </div>
+      <p class="hero-meta">Free · Windows · Best with two controllers, but keyboard works too</p>
+    </div>
+  </section>
+
+  <!-- PHASES -->
+  <section class="phases" id="phases">
+    <h2>Sun Up, Sun Down</h2>
+    <p class="section-intro">Every day at camp splits into two phases &mdash; and they don't mix.</p>
+
+    <div class="phase-grid">
+      <article class="phase-card phase-day">
+        <h3>Daytime &mdash; Gather &amp; Build</h3>
+        <ul>
+          <li>Collect materials scattered around camp</li>
+          <li>Repair broken structures before they fall apart</li>
+          <li>Build new facilities to grow the campsite</li>
+          <li>Spend the day's earnings on upgrades once night falls</li>
+        </ul>
+      </article>
+
+      <article class="phase-card phase-night">
+        <h3>Nighttime &mdash; Keep the Guests Happy</h3>
+        <ul>
+          <li>Animal guests check in for the evening</li>
+          <li>Every mood swing shows right on their face</li>
+          <li>No hammers allowed once the sun sets</li>
+          <li>End the night with a rating that decides tomorrow's budget</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section class="screens" id="screens">
+    <h2>A Look Around Camp</h2>
+    <p class="section-intro">Drag or scroll sideways &mdash; nothing here sits still for long.</p>
+
+    <div class="screens-strip">
+      <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDcyMC5wbmc=/original/okyn91.png" alt="Beavers repairing a camp structure" loading="lazy" />
+      <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDcxOS5wbmc=/original/i4tgQH.png" alt="Two-player co-op gameplay at the campsite" loading="lazy" />
+      <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDcyMS5wbmc=/original/P6G8AN.png" alt="Campsite at night with animal guests" loading="lazy" />
+      <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDc1MC5wbmc=/original/1b90gE.png" alt="Gathering materials around camp" loading="lazy" />
+      <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDc0OS5wbmc=/original/f%2FjcMs.png" alt="Upgrade and building screen" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- TRAILER -->
+  <section class="trailer" id="trailer">
+    <h2>Watch the Chaos Unfold</h2>
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/5vs3ySwKyQA"
+        title="Dam Good Camp trailer"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <!-- CREW -->
+  <section class="crew" id="crew">
+    <h2>Who's Behind the Dam</h2>
+    <p class="section-intro">Made by five people at MFF UK in Prague, still building it out.</p>
+
+    <div class="crew-grid">
+      <a class="crew-card" href="https://rezeta.itch.io" target="_blank" rel="noopener">
+        <span class="crew-name">Tereza Válková</span>
+        <span class="crew-role">Lead design, art direction, environment art</span>
+      </a>
+      <a class="crew-card" href="https://itch.io/profile/e-liker" target="_blank" rel="noopener">
+        <span class="crew-name">Eliška Kerbachová</span>
+        <span class="crew-role">Character art &amp; animation</span>
+      </a>
+      <a class="crew-card" href="https://bethkux.itch.io" target="_blank" rel="noopener">
+        <span class="crew-name">Alžbeta Kulichová</span>
+        <span class="crew-role">Gameplay &amp; UI programming</span>
+      </a>
+      <a class="crew-card" href="https://s77tosemi.itch.io" target="_blank" rel="noopener">
+        <span class="crew-name">Vojtěch Kudibal</span>
+        <span class="crew-role">Programming, music &amp; sound design</span>
+      </a>
+      <a class="crew-card" href="https://vojtog.itch.io" target="_blank" rel="noopener">
+        <span class="crew-name">Vojtěch Gáborík</span>
+        <span class="crew-role">Graphics programming</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <span class="brand-mark" aria-hidden="true">🦫</span>
+    <p>Dam Good Camp &middot; In development &middot; Made with Unity &middot; Windows</p>
+  </div>
+  <div class="footer-links">
+    <a href="https://bethkux.itch.io/dam-good-camp" target="_blank" rel="noopener">itch.io</a>
+    <a href="https://github.com/bethkux/Dam-Good-Camp" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://linktr.ee/damgoodcamp" target="_blank" rel="noopener">Linktree</a>
+  </div>
+  <p class="footer-tags">Animals &middot; Camping &middot; Casual &middot; Cute &middot; Multiplayer</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
