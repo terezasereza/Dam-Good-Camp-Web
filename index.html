@@ -42,6 +42,8 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="hero-sky" aria-hidden="true">
+      <img class="hero-bg hero-bg-day" src="images/bg-day.png" alt="" />
+      <img class="hero-bg hero-bg-night" src="images/bg-night.png" alt="" />
       <div class="stars" id="stars"></div>
       <div class="dn-mount">
         <button class="dn-indicator" id="dnIndicator" type="button" aria-pressed="false" aria-label="Toggle day and night">
@@ -50,20 +52,9 @@
                src="images/day-night-circle.png"
                onerror="this.onerror=null;this.src=window.DN_FALLBACK_IMG;"
                alt="" />
-          <span class="dn-arrow" id="dnArrow"></span>
+          <span class="dn-arrow dn-arrow-day" id="dnArrowDay"></span>
+          <span class="dn-arrow dn-arrow-night" id="dnArrowNight"></span>
         </button>
-      </div>
-      <div class="hills hills-back"></div>
-      <div class="hills hills-front"></div>
-      <div class="water"></div>
-      <div class="scene-props">
-        <div class="tent" title="the tent"></div>
-        <div class="campfire" title="the campfire">
-          <span class="flame f1"></span><span class="flame f2"></span><span class="flame f3"></span>
-        </div>
-        <div class="pine p1"></div>
-        <div class="pine p2"></div>
-        <div class="pine p3"></div>
       </div>
     </div>
 
@@ -79,7 +70,6 @@
         <a class="btn btn-primary" href="https://bethkux.itch.io/dam-good-camp" target="_blank" rel="noopener">Get it on itch.io</a>
         <a class="btn btn-ghost" href="#trailer">Watch the trailer</a>
       </div>
-      <p class="hero-meta">Free · Windows · Best with two controllers, but keyboard works too</p>
     </div>
   </section>
 
@@ -114,9 +104,9 @@
   <!-- SCREENSHOTS -->
   <section class="screens" id="screens">
     <h2>A Look Around Camp</h2>
-    <p class="section-intro">Drag or scroll sideways &mdash; nothing here sits still for long.</p>
+    <p class="section-intro">A few snapshots from around the site.</p>
 
-    <div class="screens-strip">
+    <div class="screens-zigzag">
       <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDcyMC5wbmc=/original/okyn91.png" alt="Beavers repairing a camp structure" loading="lazy" />
       <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDcxOS5wbmc=/original/i4tgQH.png" alt="Two-player co-op gameplay at the campsite" loading="lazy" />
       <img src="https://img.itch.zone/aW1hZ2UvNDU2NjExNi8yNzk0NDcyMS5wbmc=/original/P6G8AN.png" alt="Campsite at night with animal guests" loading="lazy" />
@@ -172,15 +162,12 @@
 
 <footer class="site-footer">
   <div class="footer-top">
-    <span class="brand-mark" aria-hidden="true">🦫</span>
-    <p>Dam Good Camp &middot; In development &middot; Made with Unity &middot; Windows</p>
+    <p>In development &middot; Made with Unity</p>
   </div>
   <div class="footer-links">
     <a href="https://bethkux.itch.io/dam-good-camp" target="_blank" rel="noopener">itch.io</a>
-    <a href="https://github.com/bethkux/Dam-Good-Camp" target="_blank" rel="noopener">GitHub</a>
     <a href="https://linktr.ee/damgoodcamp" target="_blank" rel="noopener">Linktree</a>
   </div>
-  <p class="footer-tags">Animals &middot; Camping &middot; Casual &middot; Cute &middot; Multiplayer</p>
 </footer>
 
 <script src="script.js"></script>

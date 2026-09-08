@@ -2,7 +2,8 @@
   const body = document.body;
   const indicator = document.getElementById('dnIndicator');
   const circleEl = document.getElementById('dnCircle');
-  const arrowEl = document.getElementById('dnArrow');
+  const arrowDayEl = document.getElementById('dnArrowDay');
+  const arrowNightEl = document.getElementById('dnArrowNight');
   const phaseLine = document.getElementById('phaseLine');
   const starsWrap = document.getElementById('stars');
 
@@ -86,7 +87,9 @@
 
   let arrowAngle = 0;
   function applyArrow() {
-    arrowEl.style.transform = `translate(-50%, -50%) rotate(${arrowAngle}deg) translateY(${ARROW_REACH}px)`;
+    const t = `translate(-50%, -50%) rotate(${arrowAngle}deg) translateY(${ARROW_REACH}px)`;
+    arrowDayEl.style.transform = t;
+    arrowNightEl.style.transform = t;
   }
 
   async function kickArrow() {
