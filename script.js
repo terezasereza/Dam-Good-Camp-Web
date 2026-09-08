@@ -39,7 +39,7 @@
   function setNight(isNight) {
     body.classList.toggle('night', isNight);
     indicator.setAttribute('aria-pressed', String(isNight));
-    // phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
+    phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
   }
 
   // ---- tween helper -------------------------------------------------
