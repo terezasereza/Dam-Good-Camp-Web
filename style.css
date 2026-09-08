@@ -343,32 +343,50 @@ body.night .stars { opacity: 1; }
   flex-direction: column;
   gap: 0px;
 }
-.screens-zigzag img {
-  height: 340px;
-  width: auto;
-  max-width: 100%;
+
+/* The polaroid frame. box-sizing: border-box makes the border and padding
+   count *inside* the width below, so when max-width shrinks the whole
+   frame on narrow screens, the border/padding shrink along with it as
+   one solid block — nothing gets left oversized or squished. */
+.screen-frame {
+  box-sizing: border-box;
+  width: 650px;
+  max-width: 88%;
   background: #fff;
-  padding: 10px;
+  padding: 10px; /* fixed at normal/desktop sizes */
   border: 3px solid var(--bark);
   border-radius: 6px;
   box-shadow: 0 0px 0 var(--bark), 0 14px 26px rgba(0,0,0,0.5);
   transform: rotate(-3deg);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  align-self: flex-start; /* odd images (1st, 3rd, 5th...) sit left */
+  align-self: flex-start; /* odd frames (1st, 3rd, 5th...) sit left */
 }
-.screens-zigzag img:nth-child(2n) {
-  align-self: flex-end;  /* even images sit right */
+.screens-zigzag .screen-frame:nth-child(2n) {
+  align-self: flex-end;  /* even frames sit right */
   transform: rotate(5deg);
 }
-.screens-zigzag img:nth-child(3n) { transform: rotate(-2deg); }
-.screens-zigzag img:hover {
+.screens-zigzag .screen-frame:nth-child(3n) { transform: rotate(-2deg); }
+.screens-zigzag .screen-frame:hover {
   transform: rotate(0deg) scale(1.04) translateY(-6px);
   box-shadow: 0 0px 0 var(--bark), 0 20px 34px rgba(0,0,0,0.4);
   z-index: 2;
 }
 
-@media (max-width: 7000px) {
-  .screens-zigzag img { height: 300px; }
+/* Only below this breakpoint does the frame actually shrink (max-width:
+   88% starts biting once the viewport is narrower than the 360px base
+   width) — so only there does the border need to shrink with it. Above
+   this width, padding stays a fixed 10px and never grows. */
+@media (max-width: 409px) {
+  .screen-frame { padding: 2.8%; }
+}
+
+/* The image itself: full width of the frame's inner area, height auto so
+   it always keeps its real, uncropped aspect ratio — no cover, no fixed
+   height, nothing fighting over the shape. */
+.screen-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ---------- trailer ---------- */
