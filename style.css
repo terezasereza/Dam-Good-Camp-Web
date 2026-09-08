@@ -278,7 +278,7 @@ body.night .stars { opacity: 1; }
   color: #fff;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-.hero-phase {
+/* .hero-phase {
   margin-top: 18px;
   font-weight: 800;
   color: #fff;
@@ -287,7 +287,7 @@ body.night .stars { opacity: 1; }
   padding: 8px 18px;
   border-radius: 999px;
   font-size: 0.95rem;
-}
+} */
 .hero-ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .hero-ctas .btn-ghost { color: #fff; }
 .hero-meta { margin-top: 18px; color: #fff; opacity: 0.85; font-size: 0.9rem; }

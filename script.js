@@ -4,7 +4,7 @@
   const circleEl = document.getElementById('dnCircle');
   const arrowDayEl = document.getElementById('dnArrowDay');
   const arrowNightEl = document.getElementById('dnArrowNight');
-  const phaseLine = document.getElementById('phaseLine');
+  // const phaseLine = document.getElementById('phaseLine');
   const starsWrap = document.getElementById('stars');
 
   const DAY_TEXT = "☀️ It's daytime at camp — time to build.";
@@ -39,7 +39,7 @@
   function setNight(isNight) {
     body.classList.toggle('night', isNight);
     indicator.setAttribute('aria-pressed', String(isNight));
-    phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
+    // phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
   }
 
   // ---- tween helper -------------------------------------------------
