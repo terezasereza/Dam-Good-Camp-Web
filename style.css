@@ -408,7 +408,7 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 25px;
 }
 .crew-card {
   display: flex;
@@ -420,7 +420,7 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
   border-radius: 999px;
   padding: 14px 32px 14px 14px;
   width: 100%;
-  max-width: 520px;
+  max-width: 550px;
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 .crew-zigzag .crew-card:nth-child(2n) {
@@ -443,8 +443,8 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
 .crew-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .crew-text { display: flex; flex-direction: column; }
-.crew-name { display: block; font-family: var(--font-display); font-size: 1.2rem; color: var(--ink); }
-.crew-role { display: block; margin-top: 4px; font-size: 0.95rem; opacity: 0.75; }
+.crew-name { display: block; font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); }
+.crew-role { display: block; margin-top: 4px; font-size: 1.0rem; opacity: 0.75; }
 
 @media (max-width: 640px) {
   .crew-card, .crew-zigzag .crew-card:nth-child(2n) {
