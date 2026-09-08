@@ -9,7 +9,7 @@
   --amber: #E2A33D;
   --dusk: #211B42;
   --dusk-deep: #151033;
-  --lavender: #A793EE;
+  --lavender: #8d7cca;
 
   --bg: var(--cream);
   --ink: var(--bark);
@@ -25,11 +25,11 @@
 }
 
 body.night {
-  --bg: var(--dusk-deep);
+  --bg: #272944;
   --ink: #EFE9FF;
   --accent: var(--lavender);
   --accent-ink: #241a4d;
-  --card-bg: #2A2358;
+  --card-bg: #48496a;
   --card-border: rgba(167, 147, 238, 0.35);
 }
 
@@ -71,7 +71,7 @@ a { color: inherit; }
   outline-offset: 2px;
 }
 
-section { max-width: 1080px; margin: 0 auto; padding: 96px 24px; }
+section { max-width: 1080px; margin: 0 auto; padding: 50px 24px; }
 
 .section-intro { max-width: 60ch; color: var(--ink); opacity: 0.75; margin-top: 10px; font-size: 1.05rem; }
 
@@ -91,15 +91,32 @@ section { max-width: 1080px; margin: 0 auto; padding: 96px 24px; }
   background: var(--moss);
   color: #fff;
   box-shadow: 0 4px 0 #244126;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.4s ease;
 }
 .btn-primary:hover { box-shadow: 0 6px 0 #244126; }
+body.night .btn-primary {
+  background: var(--lavender);
+  color: #241a4d;
+  box-shadow: 0 4px 0 #6f5bc4;
+}
+body.night .btn-primary:hover { box-shadow: 0 6px 0 #6f5bc4; }
+
 .btn-ghost {
   background: transparent;
   border-color: currentColor;
   color: var(--ink);
 }
-.btn-small { padding: 9px 18px; font-size: 0.9rem; border-radius: 8px; background: var(--moss); color: #fff; box-shadow: 0 3px 0 #244126; }
+.btn-small {
+  padding: 9px 18px; font-size: 0.9rem; border-radius: 8px;
+  background: var(--moss); color: #fff; box-shadow: 0 3px 0 #244126;
+  transition: transform 0.15s ease, background 0.4s ease, box-shadow 0.4s ease;
+}
 .btn-small:hover { transform: translateY(-1px); }
+body.night .btn-small {
+  background: var(--lavender);
+  color: #241a4d;
+  box-shadow: 0 3px 0 #6f5bc4;
+}
 
 /* ---------- topbar ---------- */
 .topbar {
@@ -174,10 +191,11 @@ body.night .stars { opacity: 1; }
    else (the visible half, the ring, the circle, the arrow reach) scales
    off of it automatically. */
 .dn-mount {
-  --dn-size: 200px;
+  --dn-size: 220px;
 
   position: absolute; top: -1.5%; left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(1);
+  transition: transform 0.25s ease;
   width: var(--dn-size);
   height: calc(var(--dn-size) * 0.55); /* how much of it pokes down */
   overflow: hidden;
@@ -186,9 +204,14 @@ body.night .stars { opacity: 1; }
   filter: drop-shadow(0 6px 10px rgba(0,0,0,0.28));
 }
 
+.dn-mount:has(button:hover),
+.dn-mount:has(button:focus-visible) {
+  transform: translateX(-50%) scale(1.09);
+}
+
 .dn-indicator {
   position: absolute; left: 0;
-  top: calc(-1 * (var(--dn-size) - (var(--dn-size) * 0.55)));
+  top: calc(-1 * (var(--dn-size) - (var(--dn-size) * 0.53)));
   width: var(--dn-size); height: var(--dn-size);
   background: none; border: none; padding: 0; cursor: pointer;
   pointer-events: auto;
@@ -223,20 +246,18 @@ body.night .stars { opacity: 1; }
    Two identically-positioned triangles, one per color, cross-fade their
    opacity — smoother than snapping border-color directly. */
 .dn-arrow {
-  position: absolute; top: 23%; left: 50%;
+  position: absolute; top: 25%; left: 50%;
   width: 0; height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
   transform: translate(-50%, -50%) rotate(0deg) translateY(calc(var(--dn-size) * 0.3));
   will-change: transform, opacity;
   pointer-events: none;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
   transition: opacity 1.8s ease;
 }
-.dn-arrow-day { border-top: 11px solid var(--bark); opacity: 1; }
-.dn-arrow-night { border-top: 11px solid #EFE9FF; opacity: 0; }
-body.night .dn-arrow-day { opacity: 0; }
-body.night .dn-arrow-night { opacity: 1; }
+.dn-arrow-day { border-top: 16px solid var(--bark); opacity: 1; }
+.dn-arrow-night { border-top: 16px solid #EFE9FF; opacity: 0; }
 
 .hero-copy {
   position: relative; z-index: 3;
@@ -272,7 +293,7 @@ body.night .dn-arrow-night { opacity: 1; }
 .hero-meta { margin-top: 18px; color: #fff; opacity: 0.85; font-size: 0.9rem; }
 
 /* ---------- phases ---------- */
-.phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+.phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 20px; }
 @media (max-width: 720px) { .phase-grid { grid-template-columns: 1fr; } }
 
 .phase-card {
@@ -290,17 +311,17 @@ body.night .dn-arrow-night { opacity: 1; }
 .phase-day h3 { color: var(--moss); }
 
 .phase-night {
-  background: linear-gradient(160deg, var(--dusk), var(--dusk-deep));
+  background: linear-gradient(160deg, #3A3567, #2E3849);
   color: #EFE9FF;
 }
 .phase-night h3 { color: var(--lavender); }
 
 /* ---------- screenshots ---------- */
 .screens-zigzag {
-  margin-top: 40px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0px;
 }
 .screens-zigzag img {
   height: 340px;
@@ -310,29 +331,29 @@ body.night .dn-arrow-night { opacity: 1; }
   padding: 10px;
   border: 3px solid var(--bark);
   border-radius: 6px;
-  box-shadow: 0 6px 0 var(--bark), 0 14px 26px rgba(0,0,0,0.3);
+  box-shadow: 0 0px 0 var(--bark), 0 14px 26px rgba(0,0,0,0.5);
   transform: rotate(-3deg);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   align-self: flex-start; /* odd images (1st, 3rd, 5th...) sit left */
 }
 .screens-zigzag img:nth-child(2n) {
   align-self: flex-end;  /* even images sit right */
-  transform: rotate(4deg);
+  transform: rotate(5deg);
 }
 .screens-zigzag img:nth-child(3n) { transform: rotate(-2deg); }
 .screens-zigzag img:hover {
   transform: rotate(0deg) scale(1.04) translateY(-6px);
-  box-shadow: 0 6px 0 var(--bark), 0 20px 34px rgba(0,0,0,0.4);
+  box-shadow: 0 0px 0 var(--bark), 0 20px 34px rgba(0,0,0,0.4);
   z-index: 2;
 }
 
-@media (max-width: 640px) {
-  .screens-zigzag img { height: 230px; }
+@media (max-width: 7000px) {
+  .screens-zigzag img { height: 300px; }
 }
 
 /* ---------- trailer ---------- */
 .video-frame {
-  margin-top: 36px;
+  margin-top: 20px;
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
@@ -345,24 +366,55 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* ---------- crew ---------- */
-.crew-grid {
-  margin-top: 36px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 18px;
+.crew-zigzag {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 .crew-card {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 60px;
   text-decoration: none;
   background: var(--card-bg);
   border: 2px solid var(--card-border);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 999px;
+  padding: 14px 32px 14px 14px;
+  width: 100%;
+  max-width: 500px;
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
+.crew-zigzag .crew-card:nth-child(2n) {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  padding: 14px 14px 14px 32px;
+  text-align: right;
+}
 .crew-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+.crew-photo {
+  flex: 0 0 auto;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg);
+  border: 2px solid var(--card-border);
+  display: flex; align-items: center; justify-content: center;
+}
+.crew-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.crew-text { display: flex; flex-direction: column; }
 .crew-name { display: block; font-family: var(--font-display); font-size: 1.1rem; color: var(--ink); }
-.crew-role { display: block; margin-top: 6px; font-size: 0.88rem; opacity: 0.75; }
+.crew-role { display: block; margin-top: 4px; font-size: 0.85rem; opacity: 0.75; }
+
+@media (max-width: 640px) {
+  .crew-card, .crew-zigzag .crew-card:nth-child(2n) {
+    align-self: stretch; max-width: none;
+    flex-direction: row; padding: 12px 20px 12px 12px; text-align: left;
+  }
+  .crew-photo { width: 84px; height: 84px; }
+}
 
 /* ---------- footer ---------- */
 .site-footer {
