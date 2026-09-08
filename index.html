@@ -23,6 +23,15 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
+<!-- Reusable torn-paper / pencil-erosion mask, used by .hero-tear to
+     break up the hard edge between the hero photo and the page below. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="tornEdge" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.09" numOctaves="3" seed="7" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
+
 <header class="topbar">
   <a href="#top" class="brand">
     <span class="brand-mark" aria-hidden="true"></span>
@@ -45,6 +54,7 @@
       <img class="hero-bg hero-bg-day" src="images/bg-day.png" alt="" />
       <img class="hero-bg hero-bg-night" src="images/bg-night.png" alt="" />
       <div class="stars" id="stars"></div>
+      <div class="hero-tear" aria-hidden="true"></div>
       <div class="dn-mount">
         <button class="dn-indicator" id="dnIndicator" type="button" aria-pressed="false" aria-label="Toggle day and night">
           <span class="dn-ring"></span>
@@ -76,25 +86,23 @@
   <!-- PHASES -->
   <section class="phases" id="phases">
     <h2>Sun Up, Sun Down</h2>
-    <p class="section-intro">Every day at camp splits into two phases &mdash; and they don't mix.</p>
+    <p class="section-intro">Every day at camp splits into two phases.</p>
 
     <div class="phase-grid">
       <article class="phase-card phase-day">
-        <h3>Daytime &mdash; Gather &amp; Build</h3>
+        <h3>Daytime</h3>
         <ul>
           <li>Collect materials scattered around camp</li>
           <li>Repair broken structures before they fall apart</li>
-          <li>Build new facilities to grow the campsite</li>
-          <li>Spend the day's earnings on upgrades once night falls</li>
+          <li>Every mood swing shows right on their face</li>
         </ul>
       </article>
 
       <article class="phase-card phase-night">
-        <h3>Nighttime &mdash; Keep the Guests Happy</h3>
+        <h3>Nighttime</h3>
         <ul>
           <li>Animal guests check in for the evening</li>
-          <li>Every mood swing shows right on their face</li>
-          <li>No hammers allowed once the sun sets</li>
+          <li>Spend the day's earnings on upgrades once night falls</li>
           <li>End the night with a rating that decides tomorrow's budget</li>
         </ul>
       </article>
@@ -136,35 +144,35 @@
 
     <div class="crew-zigzag">
       <a class="crew-card" href="https://rezeta.itch.io" target="_blank" rel="noopener">
-        <span class="crew-photo"><img src="images/crew-tereza.jpg" alt="" onerror="this.style.display='none'" /></span>
+        <span class="crew-photo"><img src="images/crew-tereza.png" alt="" onerror="this.style.display='none'" /></span>
         <span class="crew-text">
           <span class="crew-name">Tereza Válková</span>
           <span class="crew-role">Lead design, art direction, environment art</span>
         </span>
       </a>
       <a class="crew-card" href="https://itch.io/profile/e-liker" target="_blank" rel="noopener">
-        <span class="crew-photo"><img src="images/crew-eliska.jpg" alt="" onerror="this.style.display='none'" /></span>
+        <span class="crew-photo"><img src="images/crew-eliska.png" alt="" onerror="this.style.display='none'" /></span>
         <span class="crew-text">
           <span class="crew-name">Eliška Kerbachová</span>
           <span class="crew-role">Character art &amp; animation</span>
         </span>
       </a>
       <a class="crew-card" href="https://bethkux.itch.io" target="_blank" rel="noopener">
-        <span class="crew-photo"><img src="images/crew-alzbeta.jpg" alt="" onerror="this.style.display='none'" /></span>
+        <span class="crew-photo"><img src="images/crew-alzbeta.png" alt="" onerror="this.style.display='none'" /></span>
         <span class="crew-text">
           <span class="crew-name">Alžbeta Kulichová</span>
           <span class="crew-role">Gameplay &amp; UI programming</span>
         </span>
       </a>
       <a class="crew-card" href="https://s77tosemi.itch.io" target="_blank" rel="noopener">
-        <span class="crew-photo"><img src="images/crew-vojtech-k.jpg" alt="" onerror="this.style.display='none'" /></span>
+        <span class="crew-photo"><img src="images/crew-vojtech-k.png" alt="" onerror="this.style.display='none'" /></span>
         <span class="crew-text">
           <span class="crew-name">Vojtěch Kudibal</span>
           <span class="crew-role">Programming, music &amp; sound design</span>
         </span>
       </a>
       <a class="crew-card" href="https://vojtog.itch.io" target="_blank" rel="noopener">
-        <span class="crew-photo"><img src="images/crew-vojtech-g.jpg" alt="" onerror="this.style.display='none'" /></span>
+        <span class="crew-photo"><img src="images/crew-vojtech-g.png" alt="" onerror="this.style.display='none'" /></span>
         <span class="crew-text">
           <span class="crew-name">Vojtech Gáborík</span>
           <span class="crew-role">Graphics programming</span>
