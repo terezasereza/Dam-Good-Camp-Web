@@ -18,6 +18,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css" />
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2625508');
+</script>
+<!-- End MailerLite Universal -->
 </head>
 <body>
 
@@ -79,6 +89,9 @@
       <div class="hero-ctas">
         <a class="btn btn-primary" href="https://bethkux.itch.io/dam-good-camp" target="_blank" rel="noopener">Get it on itch.io</a>
         <a class="btn btn-ghost" href="#trailer">Watch the trailer</a>
+        <button class="btn btn-ghost ml-onclick-form" onclick="ml('show', 'CblnSc', true)" type="button">
+          Get camp updates
+        </button>
       </div>
     </div>
   </section>
