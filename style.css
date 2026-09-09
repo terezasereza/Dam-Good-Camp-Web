@@ -80,7 +80,7 @@ section { max-width: 1080px; margin: 0 auto; padding: 50px 24px; }
   display: inline-block;
   font-family: var(--font-body);
   font-weight: 800;
-  padding: 14px 26px;
+  padding: 14px 28px;
   border-radius: 10px;
   text-decoration: none;
   border: 2px solid transparent;
@@ -116,6 +116,11 @@ body.night .btn-small {
   background: var(--lavender);
   color: #241a4d;
   box-shadow: 0 3px 0 #6f5bc4;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 /* ---------- topbar ---------- */
