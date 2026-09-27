@@ -226,7 +226,7 @@ body.night .stars { opacity: 1; }
   overflow: hidden;
   z-index: 6;
   pointer-events: none; /* re-enabled on the button itself below */
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.28));
+  filter: drop-shadow(0 6px 10px rgba(51,51,51,0));
 }
 
 .dn-mount:has(button:hover),
@@ -278,7 +278,7 @@ body.night .stars { opacity: 1; }
   transform: translate(-50%, -50%) rotate(0deg) translateY(calc(var(--dn-size) * 0.3));
   will-change: transform, opacity;
   pointer-events: none;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 1px 1px rgba(51,51,51,0));
   transition: opacity 1.8s ease;
 }
 .dn-arrow-day { border-top: 16px solid var(--bark); opacity: 1; }
