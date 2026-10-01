@@ -416,6 +416,8 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
   gap: 25px;
 }
 .crew-card {
+  --crew-photo-inset: 20px;
+
   display: flex;
   align-items: center;
   gap: 60px;
@@ -436,13 +438,17 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
 }
 .crew-card:hover { transform: translateY(-4px); border-color: var(--accent); }
 
+.crew-card .crew-photo { transform: translateX(var(--crew-photo-inset)); }
+.crew-zigzag .crew-card:nth-child(2n) .crew-photo {
+  transform: translateX(calc(0px - var(--crew-photo-inset)));
+}
+
 .crew-photo {
   flex: 0 0 auto;
-  width: 110px; height: 110px;
+  width: 135px; height: 135px;
   border-radius: 50%;
   overflow: hidden;
-  background: var(--bg);
-  border: 2px solid var(--card-border);
+  border: 0px solid var(--card-border);
   display: flex; align-items: center; justify-content: center;
 }
 .crew-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -456,6 +462,7 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
     align-self: stretch; max-width: none;
     flex-direction: row; padding: 12px 20px 12px 12px; text-align: left;
   }
+  .crew-card .crew-photo { transform: translateX(var(--crew-photo-inset)); }
   .crew-photo { width: 84px; height: 84px; }
 }
 
