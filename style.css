@@ -75,7 +75,6 @@ section { max-width: 1080px; margin: 0 auto; padding: 50px 24px; }
 
 .section-intro { max-width: 60ch; color: var(--ink); opacity: 0.75; margin-top: 10px; font-size: 1.05rem; }
 
-/* ---------- buttons ---------- */
 .btn {
   display: inline-block;
   font-family: var(--font-body);
@@ -123,7 +122,6 @@ body.night .btn-small {
   font-size: inherit;
 }
 
-/* ---------- topbar ---------- */
 .topbar {
   position: sticky; top: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
@@ -152,9 +150,15 @@ body.night .btn-small {
 
 @media (max-width: 640px) {
   .topnav { display: none; }
+  .topbar { gap: 12px; padding: 12px 16px; }
+  .brand { font-size: 1.15rem; }
+  .topbar .btn-small {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 12px;
+  }
 }
 
-/* ---------- hero ---------- */
 .hero {
   position: relative;
   max-width: none;
@@ -188,11 +192,6 @@ body.night .stars { opacity: 1; }
 }
 @keyframes twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 
-/* Torn/pencil-scratch transition where the hero photo meets the solid
-   page background below it. A solid block in var(--bg) (so it matches
-   day/night automatically) is run through an SVG displacement filter,
-   which breaks its top edge into a rough, hand-drawn line instead of a
-   hard rectangle. Sits above the photo layers, below the hero copy. */
 .hero-tear {
   position: absolute;
   left: -6%; right: -6%; bottom: -6%;
@@ -208,13 +207,6 @@ body.night .stars { opacity: 1; }
   .hero-tear { height: 80px; }
 }
 
-/* day/night indicator — recreated from the in-game DayNightIndicator circle.
-   Sits centered at the very top of the hero; .dn-mount clips it so only the
-   bottom half pokes down, like a hanging badge.
-
-   To resize the whole thing, just change --dn-size below — everything
-   else (the visible half, the ring, the circle, the arrow reach) scales
-   off of it automatically. */
 .dn-mount {
   --dn-size: 220px;
 
@@ -250,11 +242,6 @@ body.night .stars { opacity: 1; }
   pointer-events: none;
 } */
 
-/* This is the piece that spins — swap the <img> src to use your own art.
-   It should be a square image with the "night" design on the top half and
-   the "day" design on the bottom half: only the bottom half is ever
-   visible at rest, and a 180deg spin swaps which half sits there.
-   See README for exact steps. */
 .dn-circle {
   position: absolute; inset: 6px;
   width: calc(100% - 12px); height: calc(100% - 12px);
@@ -266,10 +253,6 @@ body.night .stars { opacity: 1; }
   will-change: transform;
 }
 
-/* the little pointer/hand, recreated from the Unity "_arrow" element —
-   hangs from the center, pointing down into the visible half.
-   Two identically-positioned triangles, one per color, cross-fade their
-   opacity — smoother than snapping border-color directly. */
 .dn-arrow {
   position: absolute; top: 25%; left: 50%;
   width: 0; height: 0;
@@ -341,7 +324,6 @@ body.night .stars { opacity: 1; }
 }
 .phase-night h3 { color: var(--lavender); }
 
-/* ---------- screenshots ---------- */
 .screens-zigzag {
   margin-top: 30px;
   display: flex;
@@ -349,10 +331,6 @@ body.night .stars { opacity: 1; }
   gap: 0px;
 }
 
-/* The polaroid frame. box-sizing: border-box makes the border and padding
-   count *inside* the width below, so when max-width shrinks the whole
-   frame on narrow screens, the border/padding shrink along with it as
-   one solid block — nothing gets left oversized or squished. */
 .screen-frame {
   box-sizing: border-box;
   width: 650px;
@@ -377,24 +355,16 @@ body.night .stars { opacity: 1; }
   z-index: 2;
 }
 
-/* Only below this breakpoint does the frame actually shrink (max-width:
-   88% starts biting once the viewport is narrower than the 360px base
-   width) — so only there does the border need to shrink with it. Above
-   this width, padding stays a fixed 10px and never grows. */
 @media (max-width: 409px) {
   .screen-frame { padding: 2.8%; }
 }
 
-/* The image itself: full width of the frame's inner area, height auto so
-   it always keeps its real, uncropped aspect ratio — no cover, no fixed
-   height, nothing fighting over the shape. */
 .screen-frame img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* ---------- trailer ---------- */
 .video-frame {
   margin-top: 20px;
   position: relative;
@@ -408,7 +378,6 @@ body.night .stars { opacity: 1; }
 body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 var(--lavender); }
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-/* ---------- crew ---------- */
 .crew-zigzag {
   margin-top: 20px;
   display: flex;
@@ -463,19 +432,28 @@ body.night .video-frame { border-color: var(--lavender); box-shadow: 0 10px 0 va
     flex-direction: row; padding: 12px 20px 12px 12px; text-align: left;
   }
   .crew-card .crew-photo { transform: translateX(var(--crew-photo-inset)); }
+  .crew-zigzag .crew-card:nth-child(2n) .crew-photo {
+    transform: translateX(var(--crew-photo-inset));
+  }
   .crew-photo { width: 84px; height: 84px; }
 }
 
-/* ---------- footer ---------- */
 .site-footer {
   border-top: 1px solid var(--card-border);
-  padding: 48px 24px 60px;
+  padding: 28px 24px 24px;
   text-align: center;
   color: var(--ink);
 }
-.footer-top { display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; }
-.footer-top .brand-mark { font-size: 1.2rem; }
-.footer-links { margin-top: 14px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-.footer-links a { text-decoration: none; font-weight: 700; opacity: 0.8; }
-.footer-links a:hover { opacity: 1; }
-.footer-tags { margin-top: 16px; font-size: 0.85rem; opacity: 0.6; }
+.footer-socials { display: flex; justify-content: center; gap: 14px; }
+.footer-socials a {
+  width: 54px; height: 54px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--card-border);
+  border-radius: 50%;
+  background: var(--card-bg);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.footer-socials a:hover { transform: translateY(-2px); opacity: 0.8; }
+.footer-socials img { width: 35px; height: 35px; object-fit: contain; }
+.footer-team-logo { display: block; width: 80px; height: 80px; object-fit: contain; margin: 20px auto 10px; }
+.footer-copyright { margin: 0; font-size: 0.9rem; opacity: 0.75; }

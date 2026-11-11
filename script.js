@@ -12,9 +12,6 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Built-in placeholder art for the spinning circle: only the bottom half
-  // is ever visible at rest, so "day" goes on the bottom and "night" on
-  // the top — a 180deg spin swaps which one shows.
   window.DN_FALLBACK_IMG =
     'data:image/svg+xml;utf8,' + encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
@@ -42,7 +39,6 @@
     if (phaseLine) phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
   }
 
-  // ---- tween helper -------------------------------------------------
   function easeOut(t) { return 1 - (1 - t) * (1 - t); }
   function easeIn(t) { return t * t; }
 
@@ -59,7 +55,6 @@
     });
   }
 
-  // ---- circle flip, mirrors the Unity FlipCircle coroutine ----------
   let circleRotation = 0;
   function applyCircle() { circleEl.style.transform = `rotate(${circleRotation}deg)`; }
 
@@ -81,7 +76,6 @@
     await tween(circleRotation, target, 180, easeOut, (v) => { circleRotation = v; applyCircle(); });
   }
 
-  // ---- arrow kick, mirrors ArrowSnapToStart --------------------------
   const DN_SIZE = 190; // keep this matching --dn-size in style.css
   const ARROW_REACH = DN_SIZE * 0.05;
 
