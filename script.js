@@ -59,9 +59,12 @@
 
   const heroSky = document.querySelector('.hero-sky');
   const parallaxItems = [];
+  const sunMoonLayers = [];
 
   const h = new Date().getHours();
   const firstTheme = (h >= 20 || h < 7) ? 'night' : 'day';
+  let sunRotation = firstTheme === 'night' ? 180 : 0;
+  let currentNight = firstTheme === 'night';
 
   ['day', 'night'].forEach((theme) => {
     const set = document.createElement('div');
@@ -69,12 +72,20 @@
     LAYERS.forEach(([name, lag]) => {
       const img = document.createElement('img');
       img.className = 'px-layer';
-      const url = `images/${theme}/${name}.webp`;
+      const parallaxEl = name === 'sun' ? document.createElement('div') : img;
+      const url = name === 'sun' ? 'images/day/sun-moon.webp' : `images/${theme}/${name}.webp`;
+      if (name === 'sun') {
+        parallaxEl.className = 'px-layer-wrap';
+        img.classList.add('sun-moon-layer');
+        img.style.rotate = `${sunRotation}deg`;
+        sunMoonLayers.push(img);
+        parallaxEl.appendChild(img);
+      }
       if (theme === firstTheme) img.src = url;
       else img.dataset.src = url;
       img.alt = '';
-      set.appendChild(img);
-      parallaxItems.push({ el: img, lag });
+      set.appendChild(parallaxEl);
+      parallaxItems.push({ el: parallaxEl, lag });
     });
     if (theme === 'night') {
       set.appendChild(starsWrap); // fireflies float in front of every layer
@@ -116,6 +127,11 @@
 
   function setNight(isNight) {
     body.classList.toggle('night', isNight);
+    if (isNight !== currentNight) {
+      sunRotation += 180;
+      sunMoonLayers.forEach((layer) => { layer.style.rotate = `${sunRotation}deg`; });
+      currentNight = isNight;
+    }
     indicator.setAttribute('aria-pressed', String(isNight));
     if (phaseLine) phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
   }

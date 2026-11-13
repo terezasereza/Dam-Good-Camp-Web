@@ -196,6 +196,14 @@ body.night .hero-bg-night { opacity: 1; }
   object-position: center bottom;
   will-change: transform;
 }
+.px-layer-wrap {
+  position: absolute; inset: 0;
+  will-change: transform;
+}
+.sun-moon-layer {
+  transform-origin: center;
+  transition: rotate 1.8s ease;
+}
 
 .stars { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s ease; z-index: 3; }
 body.night .stars { opacity: 1; }
