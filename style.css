@@ -122,7 +122,7 @@ body.night .btn-primary:hover { box-shadow: 0 6px 0 #6f5bc4; }
   color: var(--ink);
 }
 .btn-small {
-  padding: 9px 18px; font-size: 0.9rem; border-radius: 8px;
+  padding: 9px 18px; font-size: 1.1rem; border-radius: 8px;
   background: var(--moss); color: #fff; box-shadow: 0 3px 0 #244126;
   transition: transform 0.15s ease, background 0.4s ease, box-shadow 0.4s ease;
 }
