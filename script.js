@@ -23,14 +23,95 @@
       <circle cx="80" cy="118" r="21" fill="#FBF3E4"/>
     </svg>`);
 
-  // scatter a handful of stars once
-  const STAR_COUNT = 26;
-  for (let i = 0; i < STAR_COUNT; i++) {
+  // scatter fireflies once, low in the scene, each with its own drift path
+  const rand = (min, max) => min + Math.random() * (max - min);
+  const FIREFLY_COUNT = 16;
+  for (let i = 0; i < FIREFLY_COUNT; i++) {
     const s = document.createElement('span');
-    s.style.left = Math.random() * 100 + '%';
-    s.style.top = Math.random() * 55 + '%';
-    s.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+    s.style.left = rand(3, 97) + '%';
+    s.style.top = rand(20, 90) + '%';
+    for (let n = 1; n <= 3; n++) {
+      s.style.setProperty(`--dx${n}`, rand(-70, 70).toFixed(0) + 'px');
+      s.style.setProperty(`--dy${n}`, rand(-45, 45).toFixed(0) + 'px');
+    }
+    s.style.setProperty('--drift-time', rand(10, 18).toFixed(1) + 's');
+    s.style.setProperty('--glow-time', rand(2, 5).toFixed(1) + 's');
+    s.style.setProperty('--delay', '-' + rand(0, 10).toFixed(1) + 's');
     starsWrap.appendChild(s);
+  }
+
+  // Parallax layers, back to front.
+  // lag: 0 = scrolls with the page, higher = falls behind (looks slower)
+  const LAYERS = [
+    ['sky', 0.6],
+    ['clouds', 0.5],
+    ['sun', 0.5],
+    ['mountains', 0.4],
+    ['left-trees-back', 0.35],
+    ['right-trees-back', 0.35],
+    ['left-trees-front', 0.25],
+    ['right-trees-front', 0.25],
+    ['grass', 0.15],
+    ['tents', 0.1],
+    ['fire', 0.1],
+    ['bushes', 0]
+  ];
+
+  const heroSky = document.querySelector('.hero-sky');
+  const parallaxItems = [];
+
+  const h = new Date().getHours();
+  const firstTheme = (h >= 20 || h < 7) ? 'night' : 'day';
+
+  ['day', 'night'].forEach((theme) => {
+    const set = document.createElement('div');
+    set.className = `hero-bg hero-bg-${theme}`;
+    LAYERS.forEach(([name, lag]) => {
+      const img = document.createElement('img');
+      img.className = 'px-layer';
+      const url = `images/${theme}/${name}.webp`;
+      if (theme === firstTheme) img.src = url;
+      else img.dataset.src = url;
+      img.alt = '';
+      set.appendChild(img);
+      parallaxItems.push({ el: img, lag });
+    });
+    if (theme === 'night') {
+      set.appendChild(starsWrap); // fireflies float in front of every layer
+      parallaxItems.push({ el: starsWrap, lag: 0.1 });
+    }
+    heroSky.insertBefore(set, heroSky.firstChild);
+  });
+
+  // Load the other theme: after page load, or earlier if the visitor reaches for the toggle.
+  function loadTheme() {
+    document.querySelectorAll('.px-layer[data-src]').forEach((img) => {
+      img.src = img.dataset.src;
+      delete img.dataset.src;
+    });
+  }
+  if (document.readyState === 'complete') loadTheme();
+  else window.addEventListener('load', loadTheme);
+
+  if (!reduceMotion) {
+    const hero = document.getElementById('top');
+    let ticking = false;
+
+    function updateParallax() {
+      ticking = false;
+      const y = Math.min(window.scrollY, hero.offsetHeight);
+      parallaxItems.forEach(({ el, lag }) => {
+        el.style.transform = `translate3d(0, ${y * lag}px, 0)`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateParallax);
+      }
+    }, { passive: true });
+    updateParallax();
   }
 
   function setNight(isNight) {
@@ -99,7 +180,11 @@
   setNight(startNight);
   if (startNight) { circleRotation = 180; applyCircle(); }
 
+  // start loading the other theme as soon as the visitor reaches for the toggle
+  indicator.addEventListener('pointerenter', loadTheme, { once: true });
+
   indicator.addEventListener('click', () => {
+    loadTheme();
     setNight(!body.classList.contains('night'));
     flipCircle();
     //kickArrow();
