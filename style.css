@@ -184,8 +184,9 @@ section { max-width: 1080px; margin: 0 auto; padding: 50px 24px; }
   object-fit: cover;
   object-position: center bottom;
 }
-.hero-bg-day { opacity: 1; z-index: 1; }
+.hero-bg-day { opacity: 1; z-index: 1; transition: opacity 1.8s ease; }
 .hero-bg-night { opacity: 0; z-index: 2; transition: opacity 1.8s ease; }
+body.night .hero-bg-day { opacity: 0; }
 body.night .hero-bg-night { opacity: 1; }
 
 .px-layer {
