@@ -94,6 +94,28 @@
     heroSky.insertBefore(set, heroSky.firstChild);
   });
 
+  function updateSunMoonTransformOrigins() {
+    sunMoonLayers.forEach((layer) => {
+      if (!layer.naturalWidth || !layer.clientWidth || !layer.clientHeight) return;
+
+      const scale = Math.max(
+        layer.clientWidth / layer.naturalWidth,
+        layer.clientHeight / layer.naturalHeight
+      );
+      // Rotate around the rendered image center, accounting for bottom cropping.
+      const renderedHeight = layer.naturalHeight * scale;
+      const originY = layer.clientHeight - renderedHeight / 2;
+      layer.style.transformOrigin = `${layer.clientWidth / 2}px ${originY}px`;
+    });
+  }
+
+  const sunMoonResizeObserver = new ResizeObserver(updateSunMoonTransformOrigins);
+  sunMoonLayers.forEach((layer) => {
+    layer.addEventListener('load', updateSunMoonTransformOrigins);
+    sunMoonResizeObserver.observe(layer);
+  });
+  updateSunMoonTransformOrigins();
+
   // Load the other theme: after page load, or earlier if the visitor reaches for the toggle.
   function loadTheme() {
     document.querySelectorAll('.px-layer[data-src]').forEach((img) => {
