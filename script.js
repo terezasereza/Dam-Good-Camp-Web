@@ -121,6 +121,7 @@
     document.querySelectorAll('.px-layer[data-src]').forEach((img) => {
       img.src = img.dataset.src;
       delete img.dataset.src;
+      img.decode().catch(() => {});
     });
   }
   if (document.readyState === 'complete') loadTheme();
