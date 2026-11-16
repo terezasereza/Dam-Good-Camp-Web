@@ -382,6 +382,8 @@ body.night .stars { opacity: 1; }
   --screen-hover-center-limit: max(0px, calc((100cqw - min(650px, 88cqw)) / 2));
   --screen-hover-x: min(clamp(12px, 6vw, 64px), var(--screen-hover-center-limit));
   --screen-hover-scale: 1.1;
+  --rot: -3deg;
+  --p: 0; /* 0 = far from centre, 1 = centred. Set by script.js on scroll */
   box-sizing: border-box;
   width: 650px;
   max-width: 88%;
@@ -390,22 +392,20 @@ body.night .stars { opacity: 1; }
   border: 3px solid var(--bark);
   border-radius: 6px;
   box-shadow: 0 0px 0 var(--bark), 0 14px 26px rgba(0,0,0,0.5);
-  transform: rotate(-3deg);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  transform:
+    translate(calc(var(--screen-hover-x) * var(--p)), calc(-6px * var(--p)))
+    rotate(calc(var(--rot) * (1 - var(--p))))
+    scale(calc(1 + (var(--screen-hover-scale) - 1) * var(--p)));
+  transition: transform 0.7s ease-out; /* smooths the scroll zoom. Raise for slower. */
   align-self: flex-start; /* odd frames (1st, 3rd, 5th...) sit left */
 }
 .screens-zigzag .screen-frame:nth-child(2n) {
   --screen-hover-x: max(clamp(-64px, -6vw, -12px), calc(0px - var(--screen-hover-center-limit)));
   align-self: flex-end;  /* even frames sit right */
-  transform: rotate(5deg);
+  --rot: 5deg;
 }
-.screens-zigzag .screen-frame:nth-child(3n) { transform: rotate(-2deg); }
-.screens-zigzag .screen-frame:hover {
-  transform: translate(var(--screen-hover-x), -6px) rotate(0deg) scale(var(--screen-hover-scale));
-  box-shadow: 0 0px 0 var(--bark), 0 20px 34px rgba(0,0,0,0.4);
-  z-index: 2;
-}
-
+.screens-zigzag .screen-frame:nth-child(3n) { --rot: -2deg; }
 @media (max-width: 699px) {
   .screen-frame {
     --screen-hover-x: min(clamp(8px, 3vw, 20px), var(--screen-hover-center-limit));

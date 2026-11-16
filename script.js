@@ -4,11 +4,7 @@
   const circleEl = document.getElementById('dnCircle');
   const arrowDayEl = document.getElementById('dnArrowDay');
   const arrowNightEl = document.getElementById('dnArrowNight');
-  const phaseLine = document.getElementById('phaseLine');
   const starsWrap = document.getElementById('stars');
-
-  const DAY_TEXT = "☀️ It's daytime at camp — time to build.";
-  const NIGHT_TEXT = "🌙 Night has fallen — happy guests only.";
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -148,6 +144,35 @@
     updateParallax();
   }
 
+  // Screenshots zoom in as they reach the middle of the screen.
+  const screenFrames = document.querySelectorAll('.screens-zigzag .screen-frame');
+  if (!reduceMotion && screenFrames.length) {
+    let zoomTicking = false;
+
+    function updateScreenZoom() {
+      zoomTicking = false;
+      const vh = window.innerHeight;
+      screenFrames.forEach((frame) => {
+        const r = frame.getBoundingClientRect();
+        const dist = Math.abs(r.top + r.height / 2 - vh / 2);
+        const p = Math.max(0, 1 - dist / (vh * 0.2)); // lower number = zoom zone is narrower
+        frame.style.setProperty('--p', p.toFixed(3));
+        frame.style.zIndex = Math.round(p * 10);
+      });
+    }
+
+    function requestZoomUpdate() {
+      if (!zoomTicking) {
+        zoomTicking = true;
+        requestAnimationFrame(updateScreenZoom);
+      }
+    }
+
+    window.addEventListener('scroll', requestZoomUpdate, { passive: true });
+    window.addEventListener('resize', requestZoomUpdate);
+    updateScreenZoom();
+  }
+
   function setNight(isNight) {
     body.classList.toggle('night', isNight);
     if (isNight !== currentNight) {
@@ -156,7 +181,6 @@
       currentNight = isNight;
     }
     indicator.setAttribute('aria-pressed', String(isNight));
-    if (phaseLine) phaseLine.textContent = isNight ? NIGHT_TEXT : DAY_TEXT;
   }
 
   function easeOut(t) { return 1 - (1 - t) * (1 - t); }
