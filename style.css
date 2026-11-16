@@ -6,7 +6,6 @@
   font-display: swap;
 }
 
-/* ---------- tokens ---------- */
 :root {
   --cream: #F4E9D4;
   --paper: #FBF3E4;
@@ -463,7 +462,7 @@ body.night .video-frame { border-color: var(--night-amber); box-shadow: 0 10px 0
   padding-bottom: 20px;
 }
 
-/* Badge: paper card with a hard edge, punched lanyard slot, big portrait on top */
+/* Badge: paper card with a hard edge and big portrait on top */
 .crew-card {
   --badge-tilt: -2.5deg;
   position: relative;
