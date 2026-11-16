@@ -428,6 +428,10 @@ body.night .stars { opacity: 1; }
   .screen-frame { --screen-hover-scale: 1.4; }
 }
 
+@media (min-width: 1600px) {
+  .screen-frame { --screen-hover-scale: 1.5; }
+}
+
 @media (max-width: 409px) {
   .screen-frame { padding: 2.8%; }
 }
