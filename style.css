@@ -452,63 +452,105 @@ body.night .video-frame { border-color: var(--night-amber); box-shadow: 0 10px 0
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 .crew-zigzag {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 40px;
+  padding-bottom: 20px;
 }
-.crew-card {
-  --crew-photo-inset: 20px;
 
+/* Badge: paper card with a hard edge, punched lanyard slot, big portrait on top */
+.crew-card {
+  --badge-tilt: -2.5deg;
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 60px;
+  flex-direction: column;
+  width: 340px;
+  max-width: 88%;
+  padding: 34px 14px 16px;
   text-decoration: none;
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: 999px;
-  padding: 14px 32px 14px 14px;
-  width: 100%;
-  max-width: 550px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  color: var(--bark);
+  background: var(--paper);
+  border: 3px solid var(--bark);
+  border-radius: 6px;
+  box-shadow: 7px 7px 0 var(--bark);
+  align-self: flex-start;
+  transform: rotate(var(--badge-tilt));
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .crew-zigzag .crew-card:nth-child(2n) {
+  --badge-tilt: 3deg;
   align-self: flex-end;
-  flex-direction: row-reverse;
-  padding: 14px 14px 14px 32px;
-  text-align: right;
 }
-.crew-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.crew-zigzag .crew-card:nth-child(3n) { --badge-tilt: -1.5deg; }
 
-.crew-card .crew-photo { transform: translateX(var(--crew-photo-inset)); }
-.crew-zigzag .crew-card:nth-child(2n) .crew-photo {
-  transform: translateX(calc(0px - var(--crew-photo-inset)));
+/* lanyard slot */
+.crew-card::before {
+  content: "";
+  position: absolute;
+  top: 11px; left: 50%;
+  width: 64px; height: 12px;
+  transform: translateX(-50%);
+  background: var(--bg);
+  border: 3px solid var(--bark);
+  border-radius: 999px;
+}
+
+.crew-card:hover, .crew-card:focus-visible {
+  transform: translateY(-8px) rotate(0deg) scale(1.04);
+  box-shadow: 10px 14px 0 var(--bark);
+  z-index: 2;
 }
 
 .crew-photo {
-  flex: 0 0 auto;
-  width: 135px; height: 135px;
-  border-radius: 50%;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
-  border: 0px solid var(--card-border);
-  display: flex; align-items: center; justify-content: center;
+  /* background: #EADFC6;
+  border: 3px solid var(--bark);
+  border-radius: 4px; */
 }
 .crew-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.crew-text { display: flex; flex-direction: column; }
-.crew-name { display: block; font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); }
-.crew-role { display: block; margin-top: 4px; font-size: 1.0rem; opacity: 0.75; }
+.crew-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 3px dashed var(--bark);
+}
+.crew-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  color: var(--bark);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease;
+}
+.crew-card:hover .crew-name, .crew-card:focus-visible .crew-name { text-decoration-color: var(--moss); }
+.crew-role { display: block; margin-top: 2px; font-size: 1.05rem; line-height: 1.3; color: var(--bark); opacity: 0.8; }
 
-@media (max-width: 640px) {
-  .crew-card, .crew-zigzag .crew-card:nth-child(2n) {
-    align-self: stretch; max-width: none;
-    flex-direction: row; padding: 12px 20px 12px 12px; text-align: left;
-  }
-  .crew-card .crew-photo { transform: translateX(var(--crew-photo-inset)); }
-  .crew-zigzag .crew-card:nth-child(2n) .crew-photo {
-    transform: translateX(var(--crew-photo-inset));
-  }
-  .crew-photo { width: 84px; height: 84px; }
+/* night: keep the hard edge readable on the dark page */
+body.night .crew-card { box-shadow: 7px 7px 0 var(--night-amber-shadow); }
+body.night .crew-card:hover, body.night .crew-card:focus-visible { box-shadow: 10px 14px 0 var(--night-amber-shadow); }
+
+/* wide screens: stagger the badges so the zigzag interlocks */
+@media (min-width: 760px) {
+  .crew-card { width: 360px; }
+  .crew-zigzag { gap: 0; }
+  .crew-zigzag .crew-card:nth-child(n+2) { margin-top: -130px; }
+  .crew-zigzag .crew-card:nth-child(odd)  { margin-left: 4%; }
+  .crew-zigzag .crew-card:nth-child(even) { margin-right: 4%; }
+}
+
+@media (max-width: 759px) {
+  .crew-card { width: 300px; max-width: 86%; }
 }
 
 .site-footer {
