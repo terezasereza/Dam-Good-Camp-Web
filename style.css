@@ -425,7 +425,7 @@ body.night .stars { opacity: 1; }
 }
 
 @media (min-width: 1400px) {
-  .screen-frame { --screen-hover-scale: 1.35; }
+  .screen-frame { --screen-hover-scale: 1.4; }
 }
 
 @media (max-width: 409px) {
