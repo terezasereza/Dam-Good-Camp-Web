@@ -379,6 +379,7 @@ body.night .stars { opacity: 1; }
 }
 
 .screen-frame {
+  --screen-hover-x: clamp(14px, 4vw, 36px);
   box-sizing: border-box;
   width: 650px;
   max-width: 88%;
@@ -392,12 +393,13 @@ body.night .stars { opacity: 1; }
   align-self: flex-start; /* odd frames (1st, 3rd, 5th...) sit left */
 }
 .screens-zigzag .screen-frame:nth-child(2n) {
+  --screen-hover-x: clamp(-36px, -4vw, -14px);
   align-self: flex-end;  /* even frames sit right */
   transform: rotate(5deg);
 }
 .screens-zigzag .screen-frame:nth-child(3n) { transform: rotate(-2deg); }
 .screens-zigzag .screen-frame:hover {
-  transform: rotate(0deg) scale(1.04) translateY(-6px);
+  transform: rotate(0deg) scale(1.15) translate(var(--screen-hover-x), -6px);
   box-shadow: 0 0px 0 var(--bark), 0 20px 34px rgba(0,0,0,0.4);
   z-index: 2;
 }
