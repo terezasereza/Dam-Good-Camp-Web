@@ -566,16 +566,60 @@ body.night .crew-card:hover, body.night .crew-card:focus-visible { box-shadow: 1
   text-align: center;
   color: var(--ink);
 }
-.footer-socials { display: flex; justify-content: center; gap: 14px; }
-.footer-socials a {
-  width: 54px; height: 54px;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--card-border);
-  border-radius: 50%;
-  background: var(--card-bg);
-  transition: transform 0.2s ease, opacity 0.2s ease;
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 8px 0 4px;
 }
-.footer-socials a:hover { transform: translateY(-2px); opacity: 0.8; }
-.footer-socials img { width: 35px; height: 35px; object-fit: contain; }
+.footer-socials a {
+  --tilt: -5deg;
+  --patch-shadow: var(--bark);
+  position: relative;
+  width: 68px; height: 68px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper);
+  border: 3px solid var(--bark);
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 var(--patch-shadow);
+  transform: rotate(var(--tilt));
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.footer-socials a:nth-child(even) { --tilt: 5deg; }
+.footer-socials a:nth-child(3n) { --tilt: -3deg; }
+
+/* stitched edge */
+/* stitched edge: hidden until hover */
+.footer-socials a::before {
+  content: "";
+  position: absolute; inset: 4px;
+  border: 2px dashed var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-socials a:hover,
+.footer-socials a:focus-visible {
+  transform: translateY(-6px) rotate(0deg) scale(1.1);
+  box-shadow: 6px 10px 0 var(--patch-shadow);
+}
+.footer-socials a:hover::before,
+.footer-socials a:focus-visible::before {
+  opacity: 1;
+}
+
+.footer-socials img {
+  width: 36px; height: 36px;
+  object-fit: contain;
+  position: relative;
+}
+
+body.night .footer-socials a {
+  --patch-shadow: var(--night-amber-shadow);
+}
+
 .footer-team-logo { display: block; width: 90px; height: 90px; object-fit: contain; margin: 20px auto 10px; }
 .footer-copyright { margin: 0; font-size: 0.9rem; opacity: 0.75; }
