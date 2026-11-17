@@ -174,7 +174,11 @@ section { max-width: 1080px; margin: 0 auto; padding: 50px 24px; }
 .hero-sky {
   position: absolute; inset: 0;
   overflow: hidden;
-  background: #151033; /* shows briefly only if images are still loading */
+  background: #FFDDB4; /* day */
+  transition: background 1.8s ease;
+}
+body.night .hero-sky {
+  background: #595167; /* night */
 }
 
 .hero-bg {
