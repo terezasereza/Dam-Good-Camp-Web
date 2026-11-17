@@ -69,7 +69,7 @@
       const img = document.createElement('img');
       img.className = 'px-layer';
       const parallaxEl = name === 'sun' ? document.createElement('div') : img;
-      const url = name === 'sun' ? 'images/day/sun-moon.webp' : `images/${theme}/${name}.webp`;
+      const url = name === 'sun' ? 'images/bg-day/sun-moon.webp' : `images/bg-${theme}/${name}.webp`;
       if (name === 'sun') {
         parallaxEl.className = 'px-layer-wrap';
         img.classList.add('sun-moon-layer');
