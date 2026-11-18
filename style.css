@@ -169,6 +169,14 @@ section { max-width: 1080px; margin: 0 auto; padding: 50px 24px; }
   overflow: hidden;
 }
 
+@media (orientation: landscape) and (min-width: 700px) {
+  .hero {
+    height: 77.92vw;
+    min-height: 92vh;
+    max-height: 140vh;
+  }
+}
+
 .hero-sky {
   position: absolute; inset: 0;
   overflow: hidden;
@@ -327,7 +335,7 @@ body.night .stars { opacity: 1; }
 }
 .hero-title img {
   display: block;
-  width: min(100%, 560px);
+  width: min(100%, 700px, 75vh);
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 3px 0 rgba(0,0,0,0.25)) drop-shadow(0 10px 24px rgba(0,0,0,0.25));

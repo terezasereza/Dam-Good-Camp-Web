@@ -40,16 +40,16 @@
   // lag: 0 = scrolls with the page, higher = falls behind (looks slower)
   const LAYERS = [
     ['sky', 0.6],
-    ['clouds', 0.5],
-    ['sun', 0.5],
-    ['mountains', 0.4],
-    ['left-trees-back', 0.35],
-    ['right-trees-back', 0.35],
-    ['left-trees-front', 0.25],
-    ['right-trees-front', 0.25],
-    ['grass', 0.15],
-    ['tents', 0.1],
-    ['fire', 0.1],
+    ['clouds', 0.6],
+    ['sun', 0.45],
+    ['mountains', 0.35],
+    ['left-trees-back', 0.25],
+    ['right-trees-back', 0.25],
+    ['left-trees-front', 0.15],
+    ['right-trees-front', 0.15],
+    ['grass', 0],
+    ['tents', 0],
+    ['fire', 0],
     ['bushes', 0]
   ];
 
@@ -98,10 +98,15 @@
         layer.clientWidth / layer.naturalWidth,
         layer.clientHeight / layer.naturalHeight
       );
-      // Rotate around the rendered image center, accounting for bottom cropping.
+      const renderedWidth = layer.naturalWidth * scale;
       const renderedHeight = layer.naturalHeight * scale;
-      const originY = layer.clientHeight - renderedHeight / 2;
-      layer.style.transformOrigin = `${layer.clientWidth / 2}px ${originY}px`;
+      const offsetX = (layer.clientWidth - renderedWidth) / 2;
+      const offsetY = layer.clientHeight - renderedHeight;
+      const sourceOriginX = layer.naturalWidth * 0.47;
+      const sourceOriginY = layer.naturalHeight * 0.52;
+      const originX = offsetX + sourceOriginX * scale;
+      const originY = offsetY + sourceOriginY * scale;
+      layer.style.transformOrigin = `${originX}px ${originY}px`;
     });
   }
 
@@ -125,6 +130,10 @@
 
   if (!reduceMotion) {
     const hero = document.getElementById('top');
+    const heroTitle = hero.querySelector('.hero-title');
+    const heroCtas = hero.querySelector('.hero-ctas');
+    const dayNightMount = hero.querySelector('.dn-mount');
+    let titleOffset = 0;
     let ticking = false;
 
     function updateParallax() {
@@ -133,14 +142,29 @@
       parallaxItems.forEach(({ el, lag }) => {
         el.style.transform = `translate3d(0, ${y * lag}px, 0)`;
       });
+
+      const progress = Math.min(window.scrollY / (hero.offsetHeight * 1.7), 1);
+      const gap = Math.max(
+        0,
+        heroCtas.offsetTop - heroTitle.offsetTop - heroTitle.offsetHeight
+      );
+      const baseTitleTop = heroTitle.getBoundingClientRect().top - titleOffset;
+      const wheelBottom = dayNightMount.getBoundingClientRect().bottom;
+      const safeLift = Math.max(0, baseTitleTop - wheelBottom - 24);
+      const startOffset = Math.min(hero.offsetHeight * 0.32, 450, safeLift);
+      titleOffset = -startOffset + (startOffset + gap) * progress;
+      heroTitle.style.transform = `translate3d(0, ${titleOffset}px, 0)`;
     }
 
-    window.addEventListener('scroll', () => {
+    function requestParallaxUpdate() {
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(updateParallax);
       }
-    }, { passive: true });
+    }
+
+    window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
+    window.addEventListener('resize', requestParallaxUpdate);
     updateParallax();
   }
 
