@@ -143,7 +143,7 @@
         el.style.transform = `translate3d(0, ${y * lag}px, 0)`;
       });
 
-      const progress = Math.min(window.scrollY / (hero.offsetHeight * 1.7), 1);
+      const progress = Math.min(window.scrollY / (hero.offsetHeight * 1.9), 1);
       const gap = Math.max(
         0,
         heroCtas.offsetTop - heroTitle.offsetTop - heroTitle.offsetHeight
