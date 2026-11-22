@@ -311,7 +311,6 @@
     //kickArrow();
   });
 
-  // loading screen
   // Stays up until the visible theme's layers, logos and fonts are decoded.
   // Screenshots (lazy) and the other theme keep loading behind the scenes.
   const loader = document.getElementById('loadingScreen');
