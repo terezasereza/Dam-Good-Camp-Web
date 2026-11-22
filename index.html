@@ -19,6 +19,16 @@
 
 <link rel="stylesheet" href="style.css" />
 
+<!-- Loading screen: lock scroll + pick day/night colours before first paint -->
+<script>
+  (function () {
+    var d = document.documentElement, h = new Date().getHours();
+    d.classList.add('is-loading');
+    if (h >= 20 || h < 7) d.classList.add('loading-night');
+  })();
+</script>
+<noscript><style>.loading-screen { display: none !important; } html.is-loading { overflow: auto !important; }</style></noscript>
+
 <!-- MailerLite Universal -->
 <!-- <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -30,6 +40,12 @@
 <!-- End MailerLite Universal -->
 </head>
 <body>
+
+<div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading Dam Good Camp">
+  <div class="loading-content">
+    <img class="loading-logo" src="images/logos/dgc-logo-nobg.webp" alt="Dam Good Camp" />
+  </div>
+</div>
 
 <a class="skip-link" href="#main">Skip to content</a>
 

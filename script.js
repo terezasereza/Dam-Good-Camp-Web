@@ -81,14 +81,20 @@
       else img.dataset.src = url;
       img.alt = '';
       set.appendChild(parallaxEl);
-      parallaxItems.push({ el: parallaxEl, lag });
+      parallaxItems.push({ el: parallaxEl, lag, theme });
     });
     if (theme === 'night') {
       set.appendChild(starsWrap); // fireflies float in front of every layer
-      parallaxItems.push({ el: starsWrap, lag: 0.1 });
+      parallaxItems.push({ el: starsWrap, lag: 0.1, theme });
     }
     heroSky.insertBefore(set, heroSky.firstChild);
   });
+
+  // Images the loading screen waits for: the visible theme's layers + logos.
+  // (Collected now, before the other theme gets its src.)
+  const criticalImgs = Array.from(document.querySelectorAll(
+    '.hero-bg .px-layer[src], .brand img, .hero-title img, #dnCircle'
+  ));
 
   function updateSunMoonTransformOrigins() {
     sunMoonLayers.forEach((layer) => {
@@ -128,43 +134,68 @@
   if (document.readyState === 'complete') loadTheme();
   else window.addEventListener('load', loadTheme);
 
+  // Parallax is scroll-driven JS, so each frame must be pure writes:
+  //  - layout measurements are cached (re-measured only on resize / image load)
+  //  - only the visible theme's layers are moved (the hidden set is skipped,
+  //    except during the day/night crossfade and on toggle)
+  //  - nothing is written once the hero has scrolled fully out of view
+  let requestParallaxUpdate = () => {};
+  let parallaxBothUntil = 0; // while performance.now() < this, update both themes
+
   if (!reduceMotion) {
     const hero = document.getElementById('top');
     const heroTitle = hero.querySelector('.hero-title');
     const heroCtas = hero.querySelector('.hero-ctas');
     const dayNightMount = hero.querySelector('.dn-mount');
-    let titleOffset = 0;
+
+    let heroH = 0, gap = 0, startOffset = 0;
     let ticking = false;
+    let lastSettled = false;
+
+    function measure() {
+      heroTitle.style.transform = ''; // measure the un-shifted position
+      heroH = hero.offsetHeight;
+      gap = Math.max(0, heroCtas.offsetTop - heroTitle.offsetTop - heroTitle.offsetHeight);
+      const titleTop = heroTitle.getBoundingClientRect().top;
+      const wheelBottom = dayNightMount.getBoundingClientRect().bottom;
+      const safeLift = Math.max(0, titleTop - wheelBottom - 24);
+      startOffset = Math.min(heroH * 0.32, 450, safeLift);
+    }
 
     function updateParallax() {
       ticking = false;
-      const y = Math.min(window.scrollY, hero.offsetHeight);
-      parallaxItems.forEach(({ el, lag }) => {
-        el.style.transform = `translate3d(0, ${y * lag}px, 0)`;
-      });
+      const sy = window.scrollY;
+      const settled = sy >= heroH * 1.9; // everything is at its end position
+      const both = performance.now() < parallaxBothUntil;
+      if (settled && lastSettled && !both) return;
+      lastSettled = settled;
 
-      const progress = Math.min(window.scrollY / (hero.offsetHeight * 1.9), 1);
-      const gap = Math.max(
-        0,
-        heroCtas.offsetTop - heroTitle.offsetTop - heroTitle.offsetHeight
-      );
-      const baseTitleTop = heroTitle.getBoundingClientRect().top - titleOffset;
-      const wheelBottom = dayNightMount.getBoundingClientRect().bottom;
-      const safeLift = Math.max(0, baseTitleTop - wheelBottom - 24);
-      const startOffset = Math.min(hero.offsetHeight * 0.32, 450, safeLift);
-      titleOffset = -startOffset + (startOffset + gap) * progress;
+      const y = Math.min(sy, heroH);
+      for (let i = 0; i < parallaxItems.length; i++) {
+        const item = parallaxItems[i];
+        if (!both && (item.theme === 'night') !== currentNight) continue;
+        item.el.style.transform = `translate3d(0, ${y * item.lag}px, 0)`;
+      }
+
+      const progress = Math.min(sy / (heroH * 1.9), 1);
+      const titleOffset = -startOffset + (startOffset + gap) * progress;
       heroTitle.style.transform = `translate3d(0, ${titleOffset}px, 0)`;
     }
 
-    function requestParallaxUpdate() {
+    requestParallaxUpdate = function () {
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(updateParallax);
       }
-    }
+    };
 
     window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
-    window.addEventListener('resize', requestParallaxUpdate);
+
+    // re-measure when the hero or the logo changes size (resize, image load, rotate)
+    const remeasure = () => { measure(); lastSettled = false; updateParallax(); };
+    new ResizeObserver(remeasure).observe(hero);
+    new ResizeObserver(remeasure).observe(heroTitle);
+    measure();
     updateParallax();
   }
 
@@ -203,6 +234,9 @@
       sunRotation += 180;
       sunMoonLayers.forEach((layer) => { layer.style.rotate = `${sunRotation}deg`; });
       currentNight = isNight;
+      // keep both themes in sync through the 1.8s crossfade
+      parallaxBothUntil = performance.now() + 2000;
+      requestParallaxUpdate();
     }
     indicator.setAttribute('aria-pressed', String(isNight));
   }
@@ -276,4 +310,41 @@
     flipCircle();
     //kickArrow();
   });
+
+  // loading screen
+  // Stays up until the visible theme's layers, logos and fonts are decoded.
+  // Screenshots (lazy) and the other theme keep loading behind the scenes.
+  const loader = document.getElementById('loadingScreen');
+  if (loader) {
+    const MIN_SHOW_MS = 400;   // avoid a flash when everything is cached
+    const FAILSAFE_MS = 8000;  // never trap the visitor
+    const shownAt = performance.now();
+
+    const imgReady = (img) => {
+      if (img.complete && img.naturalWidth) return Promise.resolve();
+      if (img.decode) return img.decode().catch(() => {}); // broken image: don't block
+      return new Promise((res) => {
+        img.addEventListener('load', res, { once: true });
+        img.addEventListener('error', res, { once: true });
+      });
+    };
+
+    const fontsReady = document.fonts && document.fonts.ready
+      ? document.fonts.ready.catch(() => {})
+      : Promise.resolve();
+
+    const assets = Promise.all([...criticalImgs.map(imgReady), fontsReady]);
+    const failsafe = new Promise((res) => setTimeout(res, FAILSAFE_MS));
+
+    const reveal = () => {
+      loader.classList.add('hidden');
+      document.documentElement.classList.remove('is-loading');
+      setTimeout(() => loader.remove(), 700);
+    };
+
+    Promise.race([assets, failsafe])
+      .then(() => new Promise((res) =>
+        setTimeout(res, Math.max(0, MIN_SHOW_MS - (performance.now() - shownAt)))))
+      .then(() => requestAnimationFrame(() => requestAnimationFrame(reveal)));
+  }
 })();
