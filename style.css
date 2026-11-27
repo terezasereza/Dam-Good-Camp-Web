@@ -77,7 +77,7 @@ p { margin: 0; }
 
 a { color: inherit; }
 
-/* ---------- loading screen ---------- */
+/*loading screen*/
 html.is-loading { overflow: hidden; }
 
 .loading-screen {
@@ -370,7 +370,6 @@ body.night .stars { opacity: 1; }
 }
 .hero-title {
   font-size: clamp(2.6rem, 8vw, 5rem);
-  /* own compositor layer: the drop-shadow filter on the logo is rasterised once, not every scroll frame */
   will-change: transform;
 }
 .hero-title img {
@@ -517,7 +516,6 @@ body.night .video-frame { border-color: var(--night-amber); box-shadow: 0 10px 0
   padding-bottom: 20px;
 }
 
-/* Badge: paper card with a hard edge and big portrait on top */
 .crew-card {
   --badge-tilt: -2.5deg;
   position: relative;
@@ -594,11 +592,10 @@ body.night .video-frame { border-color: var(--night-amber); box-shadow: 0 10px 0
 .crew-card:hover .crew-name, .crew-card:focus-visible .crew-name { text-decoration-color: var(--accent); }
 .crew-role { display: block; margin-top: 2px; font-size: 1.05rem; line-height: 1.3; color: var(--bark); opacity: 0.8; }
 
-/* night: keep the hard edge readable on the dark page */
 body.night .crew-card { box-shadow: 7px 7px 0 var(--night-amber-shadow); }
 body.night .crew-card:hover, body.night .crew-card:focus-visible { box-shadow: 10px 14px 0 var(--night-amber-shadow); }
 
-/* wide screens: stagger the badges so the zigzag interlocks */
+/* stagger the badges so the zigzag interlocks */
 @media (min-width: 760px) {
   .crew-card { width: 360px; }
   .crew-zigzag { gap: 0; }
@@ -641,7 +638,6 @@ body.night .crew-card:hover, body.night .crew-card:focus-visible { box-shadow: 1
 .footer-socials a:nth-child(3n) { --tilt: -3deg; }
 
 /* stitched edge */
-/* stitched edge: hidden until hover */
 .footer-socials a::before {
   content: "";
   position: absolute; inset: 4px;

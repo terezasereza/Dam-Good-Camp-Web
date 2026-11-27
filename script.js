@@ -19,7 +19,7 @@
       <circle cx="80" cy="118" r="21" fill="#FBF3E4"/>
     </svg>`);
 
-  // scatter fireflies once, low in the scene, each with its own drift path
+
   const rand = (min, max) => min + Math.random() * (max - min);
   const FIREFLY_COUNT = 16;
   for (let i = 0; i < FIREFLY_COUNT; i++) {
@@ -90,8 +90,6 @@
     heroSky.insertBefore(set, heroSky.firstChild);
   });
 
-  // Images the loading screen waits for: the visible theme's layers + logos.
-  // (Collected now, before the other theme gets its src.)
   const criticalImgs = Array.from(document.querySelectorAll(
     '.hero-bg .px-layer[src], .brand img, .hero-title img, #dnCircle'
   ));
@@ -123,7 +121,6 @@
   });
   updateSunMoonTransformOrigins();
 
-  // Load the other theme: after page load, or earlier if the visitor reaches for the toggle.
   function loadTheme() {
     document.querySelectorAll('.px-layer[data-src]').forEach((img) => {
       img.src = img.dataset.src;
@@ -134,11 +131,6 @@
   if (document.readyState === 'complete') loadTheme();
   else window.addEventListener('load', loadTheme);
 
-  // Parallax is scroll-driven JS, so each frame must be pure writes:
-  //  - layout measurements are cached (re-measured only on resize / image load)
-  //  - only the visible theme's layers are moved (the hidden set is skipped,
-  //    except during the day/night crossfade and on toggle)
-  //  - nothing is written once the hero has scrolled fully out of view
   let requestParallaxUpdate = () => {};
   let parallaxBothUntil = 0; // while performance.now() < this, update both themes
 
@@ -191,7 +183,6 @@
 
     window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
 
-    // re-measure when the hero or the logo changes size (resize, image load, rotate)
     const remeasure = () => { measure(); lastSettled = false; updateParallax(); };
     new ResizeObserver(remeasure).observe(hero);
     new ResizeObserver(remeasure).observe(heroTitle);
@@ -234,7 +225,6 @@
       sunRotation += 180;
       sunMoonLayers.forEach((layer) => { layer.style.rotate = `${sunRotation}deg`; });
       currentNight = isNight;
-      // keep both themes in sync through the 1.8s crossfade
       parallaxBothUntil = performance.now() + 2000;
       requestParallaxUpdate();
     }
@@ -270,11 +260,8 @@
       return;
     }
 
-    // anticipation: a small wind-up backward
     await tween(start, start - 18, 200, easeOut, (v) => { circleRotation = v; applyCircle(); });
-    // main flip with overshoot
     await tween(circleRotation, target + 22, 300, easeIn, (v) => { circleRotation = v; applyCircle(); });
-    // settle into place
     await tween(circleRotation, target, 180, easeOut, (v) => { circleRotation = v; applyCircle(); });
   }
 
@@ -311,17 +298,16 @@
     //kickArrow();
   });
 
-  // Stays up until the visible theme's layers, logos and fonts are decoded.
-  // Screenshots (lazy) and the other theme keep loading behind the scenes.
+
   const loader = document.getElementById('loadingScreen');
   if (loader) {
-    const MIN_SHOW_MS = 400;   // avoid a flash when everything is cached
-    const FAILSAFE_MS = 8000;  // never trap the visitor
+    const MIN_SHOW_MS = 400;
+    const FAILSAFE_MS = 8000;  
     const shownAt = performance.now();
 
     const imgReady = (img) => {
       if (img.complete && img.naturalWidth) return Promise.resolve();
-      if (img.decode) return img.decode().catch(() => {}); // broken image: don't block
+      if (img.decode) return img.decode().catch(() => {});
       return new Promise((res) => {
         img.addEventListener('load', res, { once: true });
         img.addEventListener('error', res, { once: true });
